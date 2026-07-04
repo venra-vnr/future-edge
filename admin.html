@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Dashboard | FutureEdge Technology</title>
+<link rel="icon" href="https://turquoise-careful-dingo-283.mypinata.cloud/ipfs/bafkreieros5ae7kndceuwkgjndmgfdwidsyykej7oaf4xsdvurggclro34">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#0056D2; --navy:#071B3D; --navy-2:#0C2657; --sky:#3EA6FF; --amber:#FFB020;
+    --paper:#F5F8FC; --paper-2:#EAF0FA; --ink:#0A1428; --muted:#5B6B84; --line:#E1E8F4;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:'Inter',sans-serif; background:var(--paper); color:var(--ink);}
+  h1,h2,h3{font-family:'Sora',sans-serif; margin:0 0 .4em; color:var(--navy);}
+  .layout{display:grid; grid-template-columns:250px 1fr; min-height:100vh;}
+  .sidebar{background:var(--navy); color:#C6D4EB; padding:24px 18px; position:sticky; top:0; height:100vh;}
+  .sidebar .brand{display:flex; align-items:center; gap:10px; margin-bottom:28px;}
+  .sidebar .brand img{height:34px; background:#fff; border-radius:6px; padding:3px;}
+  .sidebar .brand span{font-family:'Sora',sans-serif; color:#fff; font-weight:700; font-size:.95rem;}
+  .sidebar nav button{
+    display:flex; align-items:center; gap:10px; width:100%; text-align:left; background:none; border:0; color:#C6D4EB;
+    padding:11px 12px; border-radius:8px; font-size:.88rem; font-weight:600; cursor:pointer; margin-bottom:4px; font-family:inherit;
+  }
+  .sidebar nav button:hover{background:rgba(255,255,255,.06);}
+  .sidebar nav button.active{background:var(--blue); color:#fff;}
+  .main{padding:30px 36px;}
+  .topline{display:flex; justify-content:space-between; align-items:center; margin-bottom:26px; flex-wrap:wrap; gap:12px;}
+  .topline .view-site{font-size:.85rem; font-weight:700; color:var(--blue); border:1px solid var(--blue); padding:9px 16px; border-radius:6px;}
+  .banner{background:#FFF4E0; border:1px solid #FFD98A; color:#7A5200; padding:12px 18px; border-radius:8px; font-size:.85rem; margin-bottom:24px;}
+  .cards-row{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px;}
+  .kpi{background:#fff; border:1px solid var(--line); border-radius:10px; padding:20px;}
+  .kpi .n{font-family:'Sora',sans-serif; font-size:1.7rem; font-weight:700; color:var(--blue);}
+  .kpi .l{font-size:.8rem; color:var(--muted); margin-top:4px;}
+  .panel{display:none;}
+  .panel.active{display:block;}
+  .panel-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;}
+  table{width:100%; border-collapse:collapse; background:#fff; border-radius:10px; overflow:hidden; border:1px solid var(--line);}
+  th,td{text-align:left; padding:12px 14px; font-size:.87rem; border-bottom:1px solid var(--line);}
+  th{background:var(--paper-2); color:var(--navy-2); font-weight:700; font-size:.78rem; text-transform:uppercase; letter-spacing:.04em;}
+  tr:last-child td{border-bottom:0;}
+  .badge{padding:4px 10px; border-radius:20px; font-size:.72rem; font-weight:700;}
+  .badge.new{background:#FDECEC; color:#C0392B;}
+  .badge.contacted{background:#EAF2FD; color:var(--blue);}
+  .badge.enrolled{background:#EAF8EE; color:#1E7A3B;}
+  .btn{border:0; padding:9px 16px; border-radius:6px; font-weight:700; font-size:.82rem; cursor:pointer; font-family:inherit;}
+  .btn-primary{background:var(--blue); color:#fff;}
+  .btn-outline{background:none; border:1px solid var(--line); color:var(--navy);}
+  .btn-danger{background:#FDECEC; color:#C0392B;}
+  .row-actions{display:flex; gap:8px;}
+  .form-card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:22px; margin-bottom:22px;}
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:14px;}
+  .field label{display:block; font-size:.78rem; font-weight:700; color:var(--navy); margin-bottom:5px;}
+  .field input, .field select, .field textarea{width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:6px; font-family:inherit; font-size:.87rem; background:var(--paper);}
+  .empty{text-align:center; padding:40px 20px; color:var(--muted); font-size:.9rem;}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="https://turquoise-careful-dingo-283.mypinata.cloud/ipfs/bafkreieros5ae7kndceuwkgjndmgfdwidsyykej7oaf4xsdvurggclro34" alt="Logo">
+      <span>FutureEdge Admin</span>
+    </div>
+    <nav id="sidenav">
+      <button data-panel="dashboard" class="active">📊 Dashboard</button>
+      <button data-panel="courses">📚 Courses</button>
+      <button data-panel="enquiries">📥 Student Enquiries</button>
+      <button data-panel="testimonials">💬 Testimonials</button>
+      <button data-panel="trainers">🧑‍🏫 Trainers</button>
+      <button data-panel="gallery">🖼 Gallery</button>
+      <button data-panel="faqs">❓ FAQs</button>
+      <button data-panel="contact">📞 Contact Info</button>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="topline">
+      <div>
+        <h1 id="panel-title">Dashboard</h1>
+        <p style="color:var(--muted); font-size:.88rem; margin:0;">Manage FutureEdge Technology website content</p>
+      </div>
+      <a href="index.html" class="view-site">View Live Site ↗</a>
+    </div>
+    <div class="banner">This is a front-end prototype. Changes made here live only in this browser tab's memory and reset on reload — connect a backend (e.g. a small Node/NestJS + database API) to persist edits to the live website.</div>
+
+    <!-- DASHBOARD -->
+    <section class="panel active" id="p-dashboard">
+      <div class="cards-row">
+        <div class="kpi"><div class="n">5</div><div class="l">Active Courses</div></div>
+        <div class="kpi"><div class="n" id="kpi-enq">6</div><div class="l">New Enquiries</div></div>
+        <div class="kpi"><div class="n">4</div><div class="l">Trainers Listed</div></div>
+        <div class="kpi"><div class="n">4</div><div class="l">Testimonials Published</div></div>
+      </div>
+      <div class="form-card">
+        <h3>Recent Enquiries</h3>
+        <table>
+          <thead><tr><th>Name</th><th>Course</th><th>Phone</th><th>Status</th></tr></thead>
+          <tbody id="dash-enq-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- COURSES -->
+    <section class="panel" id="p-courses">
+      <div class="form-card">
+        <h3>Add / Edit Course</h3>
+        <div class="form-grid">
+          <div class="field"><label>Course Name</label><input id="c-name" placeholder="e.g. SAP FICO"></div>
+          <div class="field"><label>Module Code</label><input id="c-code" placeholder="e.g. Module 01"></div>
+        </div>
+        <div class="field" style="margin-bottom:14px;"><label>Short Description</label><textarea id="c-desc" rows="2" placeholder="One-line course description"></textarea></div>
+        <button class="btn btn-primary" onclick="addCourse()">Add Course</button>
+      </div>
+      <div class="panel-head"><h3 style="margin:0;">Courses</h3></div>
+      <table>
+        <thead><tr><th>Code</th><th>Course</th><th>Description</th><th>Actions</th></tr></thead>
+        <tbody id="courses-body"></tbody>
+      </table>
+    </section>
+
+    <!-- ENQUIRIES -->
+    <section class="panel" id="p-enquiries">
+      <div class="panel-head"><h3 style="margin:0;">Student Enquiries</h3><button class="btn btn-outline" onclick="refreshEnquiries()">🔄 Refresh (load new submissions)</button></div>
+      <table>
+        <thead><tr><th>Name</th><th>Course</th><th>Phone</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="enquiries-body"></tbody>
+      </table>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="panel" id="p-testimonials">
+      <div class="form-card">
+        <h3>Add Testimonial</h3>
+        <div class="form-grid">
+          <div class="field"><label>Student Name</label><input id="t-name" placeholder="e.g. Priya Sharma"></div>
+          <div class="field"><label>Course Batch</label><input id="t-course" placeholder="e.g. SAP FICO batch"></div>
+        </div>
+        <div class="field" style="margin-bottom:14px;"><label>Review</label><textarea id="t-text" rows="2" placeholder="What the student said"></textarea></div>
+        <button class="btn btn-primary" onclick="addTestimonial()">Add Testimonial</button>
+      </div>
+      <table>
+        <thead><tr><th>Name</th><th>Batch</th><th>Review</th><th>Actions</th></tr></thead>
+        <tbody id="testimonials-body"></tbody>
+      </table>
+    </section>
+
+    <!-- TRAINERS -->
+    <section class="panel" id="p-trainers">
+      <div class="form-card">
+        <h3>Add Trainer</h3>
+        <div class="form-grid">
+          <div class="field"><label>Name / Title</label><input id="tr-name" placeholder="e.g. Lead Trainer"></div>
+          <div class="field"><label>Specialisation</label><input id="tr-role" placeholder="e.g. SAP FICO"></div>
+        </div>
+        <div class="field" style="margin-bottom:14px;"><label>Bio</label><textarea id="tr-bio" rows="2" placeholder="Trainer experience summary"></textarea></div>
+        <button class="btn btn-primary" onclick="addTrainer()">Add Trainer</button>
+      </div>
+      <table>
+        <thead><tr><th>Name</th><th>Specialisation</th><th>Bio</th><th>Actions</th></tr></thead>
+        <tbody id="trainers-body"></tbody>
+      </table>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="panel" id="p-gallery">
+      <div class="form-card">
+        <h3>Add Gallery Item</h3>
+        <div class="form-grid">
+          <div class="field"><label>Caption</label><input id="g-caption" placeholder="e.g. Certification Day"></div>
+          <div class="field"><label>Image URL</label><input id="g-url" placeholder="https://..."></div>
+        </div>
+        <button class="btn btn-primary" onclick="addGallery()">Add Image</button>
+      </div>
+      <table>
+        <thead><tr><th>Caption</th><th>Image URL</th><th>Actions</th></tr></thead>
+        <tbody id="gallery-body"></tbody>
+      </table>
+    </section>
+
+    <!-- FAQS -->
+    <section class="panel" id="p-faqs">
+      <div class="form-card">
+        <h3>Add FAQ</h3>
+        <div class="field" style="margin-bottom:14px;"><label>Question</label><input id="f-q" placeholder="e.g. Do I need an IT background?"></div>
+        <div class="field" style="margin-bottom:14px;"><label>Answer</label><textarea id="f-a" rows="2" placeholder="Answer text"></textarea></div>
+        <button class="btn btn-primary" onclick="addFaq()">Add FAQ</button>
+      </div>
+      <table>
+        <thead><tr><th>Question</th><th>Answer</th><th>Actions</th></tr></thead>
+        <tbody id="faqs-body"></tbody>
+      </table>
+    </section>
+
+    <!-- CONTACT INFO -->
+    <section class="panel" id="p-contact">
+      <div class="form-card">
+        <h3>Contact Information</h3>
+        <div class="form-grid">
+          <div class="field"><label>Phone 1</label><input id="ci-phone1" value="9669792779"></div>
+          <div class="field"><label>Phone 2</label><input id="ci-phone2" value="8982598676"></div>
+        </div>
+        <div class="form-grid">
+          <div class="field"><label>Email</label><input id="ci-email" value="info@futureedgetechnology.com"></div>
+          <div class="field"><label>Landline</label><input id="ci-landline" value="0731-4397522"></div>
+        </div>
+        <div class="field" style="margin-bottom:14px;"><label>Indore Address</label><textarea id="ci-indore" rows="2">Shop No. B-9, Neha Apartment, Lal Bagh Road, Opp. Collector Office, Indore – 452001 (MP)</textarea></div>
+        <div class="field" style="margin-bottom:14px;"><label>Pune Address</label><textarea id="ci-pune" rows="2">Kharadi, Pune – 411014 (MH)</textarea></div>
+        <button class="btn btn-primary" onclick="saveContact()">Save Contact Info</button>
+        <span id="contact-saved" style="display:none; color:#1E7A3B; font-weight:700; font-size:.85rem; margin-left:12px;">✓ Saved for this session</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // ---- In-memory demo data (resets on reload — wire to a real API for persistence) ----
+  let courses = [
+    {code:'Module 01', name:'SAP FICO', desc:'Financial Accounting & Controlling with real-time projects.'},
+    {code:'Module 02', name:'SAP SD', desc:'Order-to-Cash process, pricing, billing and returns.'},
+    {code:'Module 03', name:'SAP MM', desc:'Procure-to-Pay process, inventory and invoice verification.'},
+    {code:'Module 04', name:'SAP PP', desc:'Production planning, BOM, routing and MRP.'},
+    {code:'Module 05', name:'SAP Logistics', desc:'Warehouse, transportation and distribution management.'}
+  ];
+  // ---- Student Enquiries: loads REAL submissions from the live site's contact form ----
+  // The contact form on index.html saves each submission into localStorage under 'fe_enquiries'.
+  // This panel reads that same key, so real enquiries show up here automatically.
+  const seedEnquiries = [
+    {name:'Sneha Rao', course:'SAP Logistics', phone:'9812345605', email:'sneha@email.com', status:'new'},
+    {name:'Aditya Singh', course:'Not sure', phone:'9812345606', email:'aditya@email.com', status:'new'}
+  ];
+  let enquiries = JSON.parse(localStorage.getItem('fe_enquiries') || 'null') || seedEnquiries;
+
+  function saveEnquiries(){ localStorage.setItem('fe_enquiries', JSON.stringify(enquiries)); }
+  let testimonials = [
+    {name:'Smriti Tiwari', course:'SAP FICO batch', text:'The trainers explained why each business step matters, which made interviews easier.'},
+    {name:'Rohan Gupta', course:'SAP MM batch', text:'Small batch size meant real hands-on system time, not just screen sharing.'},
+    {name:'Ajay Singh', course:'SAP SD batch', text:'Placement support continued well after classes ended.'},
+    {name:'Aditi Goyal', course:'SAP PP batch', text:'Coming from a non-IT background, the pace made SAP PP approachable.'}
+  ];
+  let trainers = [
+    {name:'Lead Trainer', role:'SAP FICO', bio:'10+ years in financial accounting implementations.'},
+    {name:'Senior Trainer', role:'SAP SD', bio:'Order-to-cash configuration specialist.'},
+    {name:'Senior Trainer', role:'SAP MM', bio:'Procure-to-pay expert across multiple industries.'},
+    {name:'Lead Trainer', role:'SAP PP & Logistics', bio:'Manufacturing and supply-chain configuration background.'}
+  ];
+  let gallery = [
+    {caption:'Classroom Training', url:''},
+    {caption:'Live Project Lab', url:''},
+    {caption:'Certification Day', url:''}
+  ];
+  let faqs = [
+    {q:'Do I need an IT background to learn SAP?', a:'No — we train commerce, engineering and functional-domain graduates alike.'},
+    {q:'Are classes classroom-based or online?', a:'Both. Live classroom batches at Indore & Pune, plus online batches.'}
+  ];
+
+  function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  function renderDashboard(){
+    document.getElementById('kpi-enq').textContent = enquiries.filter(e=>e.status==='new').length;
+    document.getElementById('dash-enq-body').innerHTML = enquiries.slice(0,5).map(e =>
+      `<tr><td>${escapeHtml(e.name)}</td><td>${escapeHtml(e.course)}</td><td>${escapeHtml(e.phone)}</td><td><span class="badge ${e.status}">${e.status}</span></td></tr>`
+    ).join('') || '<tr><td colspan="4" class="empty">No enquiries yet.</td></tr>';
+  }
+
+  function renderCourses(){
+    document.getElementById('courses-body').innerHTML = courses.map((c,i) =>
+      `<tr><td>${escapeHtml(c.code)}</td><td><strong>${escapeHtml(c.name)}</strong></td><td>${escapeHtml(c.desc)}</td>
+       <td class="row-actions"><button class="btn btn-danger" onclick="removeItem('courses',${i})">Delete</button></td></tr>`
+    ).join('') || '<tr><td colspan="4" class="empty">No courses yet.</td></tr>';
+  }
+
+  function renderEnquiries(){
+    document.getElementById('enquiries-body').innerHTML = enquiries.map((e,i) =>
+      `<tr><td>${escapeHtml(e.name)}</td><td>${escapeHtml(e.course)}</td><td>${escapeHtml(e.phone)}</td><td>${escapeHtml(e.email)}</td>
+       <td><span class="badge ${e.status}">${e.status}</span></td>
+       <td class="row-actions">
+         <button class="btn btn-outline" onclick="cycleStatus(${i})">Update Status</button>
+         <button class="btn btn-danger" onclick="removeItem('enquiries',${i})">Delete</button>
+       </td></tr>`
+    ).join('') || '<tr><td colspan="6" class="empty">No enquiries yet.</td></tr>';
+  }
+
+  function renderTestimonials(){
+    document.getElementById('testimonials-body').innerHTML = testimonials.map((t,i) =>
+      `<tr><td>${escapeHtml(t.name)}</td><td>${escapeHtml(t.course)}</td><td>${escapeHtml(t.text)}</td>
+       <td class="row-actions"><button class="btn btn-danger" onclick="removeItem('testimonials',${i})">Delete</button></td></tr>`
+    ).join('') || '<tr><td colspan="4" class="empty">No testimonials yet.</td></tr>';
+  }
+
+  function renderTrainers(){
+    document.getElementById('trainers-body').innerHTML = trainers.map((t,i) =>
+      `<tr><td>${escapeHtml(t.name)}</td><td>${escapeHtml(t.role)}</td><td>${escapeHtml(t.bio)}</td>
+       <td class="row-actions"><button class="btn btn-danger" onclick="removeItem('trainers',${i})">Delete</button></td></tr>`
+    ).join('') || '<tr><td colspan="4" class="empty">No trainers yet.</td></tr>';
+  }
+
+  function renderGallery(){
+    document.getElementById('gallery-body').innerHTML = gallery.map((g,i) =>
+      `<tr><td>${escapeHtml(g.caption)}</td><td>${escapeHtml(g.url||'(placeholder tile)')}</td>
+       <td class="row-actions"><button class="btn btn-danger" onclick="removeItem('gallery',${i})">Delete</button></td></tr>`
+    ).join('') || '<tr><td colspan="3" class="empty">No gallery items yet.</td></tr>';
+  }
+
+  function renderFaqs(){
+    document.getElementById('faqs-body').innerHTML = faqs.map((f,i) =>
+      `<tr><td>${escapeHtml(f.q)}</td><td>${escapeHtml(f.a)}</td>
+       <td class="row-actions"><button class="btn btn-danger" onclick="removeItem('faqs',${i})">Delete</button></td></tr>`
+    ).join('') || '<tr><td colspan="3" class="empty">No FAQs yet.</td></tr>';
+  }
+
+  function removeItem(type, index){
+    ({courses, enquiries, testimonials, trainers, gallery, faqs})[type].splice(index,1);
+    if(type==='enquiries') saveEnquiries();
+    renderAll();
+  }
+  function cycleStatus(i){
+    const order = ['new','contacted','enrolled'];
+    enquiries[i].status = order[(order.indexOf(enquiries[i].status)+1) % order.length];
+    saveEnquiries();
+    renderAll();
+  }
+
+  function addCourse(){
+    const name = document.getElementById('c-name').value.trim();
+    const code = document.getElementById('c-code').value.trim() || 'Module';
+    const desc = document.getElementById('c-desc').value.trim();
+    if(!name) return alert('Please enter a course name.');
+    courses.push({code, name, desc});
+    document.getElementById('c-name').value=''; document.getElementById('c-code').value=''; document.getElementById('c-desc').value='';
+    renderAll();
+  }
+  function addTestimonial(){
+    const name = document.getElementById('t-name').value.trim();
+    const course = document.getElementById('t-course').value.trim();
+    const text = document.getElementById('t-text').value.trim();
+    if(!name || !text) return alert('Please enter a name and review text.');
+    testimonials.push({name, course, text});
+    document.getElementById('t-name').value=''; document.getElementById('t-course').value=''; document.getElementById('t-text').value='';
+    renderAll();
+  }
+  function addTrainer(){
+    const name = document.getElementById('tr-name').value.trim();
+    const role = document.getElementById('tr-role').value.trim();
+    const bio = document.getElementById('tr-bio').value.trim();
+    if(!name || !role) return alert('Please enter a name and specialisation.');
+    trainers.push({name, role, bio});
+    document.getElementById('tr-name').value=''; document.getElementById('tr-role').value=''; document.getElementById('tr-bio').value='';
+    renderAll();
+  }
+  function addGallery(){
+    const caption = document.getElementById('g-caption').value.trim();
+    const url = document.getElementById('g-url').value.trim();
+    if(!caption) return alert('Please enter a caption.');
+    gallery.push({caption, url});
+    document.getElementById('g-caption').value=''; document.getElementById('g-url').value='';
+    renderAll();
+  }
+  function addFaq(){
+    const q = document.getElementById('f-q').value.trim();
+    const a = document.getElementById('f-a').value.trim();
+    if(!q || !a) return alert('Please enter both a question and an answer.');
+    faqs.push({q, a});
+    document.getElementById('f-q').value=''; document.getElementById('f-a').value='';
+    renderAll();
+  }
+  function refreshEnquiries(){
+    enquiries = JSON.parse(localStorage.getItem('fe_enquiries') || 'null') || enquiries;
+    renderAll();
+  }
+
+  function saveContact(){
+    const el = document.getElementById('contact-saved');
+    el.style.display='inline';
+    setTimeout(()=>{ el.style.display='none'; }, 2500);
+  }
+
+  function renderAll(){
+    renderDashboard(); renderCourses(); renderEnquiries(); renderTestimonials();
+    renderTrainers(); renderGallery(); renderFaqs();
+  }
+
+  document.querySelectorAll('#sidenav button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('#sidenav button').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+      document.getElementById('p-'+btn.dataset.panel).classList.add('active');
+      document.getElementById('panel-title').textContent = btn.textContent.trim().replace(/^\S+\s/, '');
+    });
+  });
+
+  renderAll();
+</script>
+</body>
+</html>
