@@ -86,14 +86,16 @@ section{padding:88px 0;}
 .topbar .wrap{display:flex; justify-content:space-between; align-items:center; padding:9px 24px; gap:10px; flex-wrap:wrap;}
 .topbar .contacts{display:flex; gap:22px; flex-wrap:wrap;}
 .topbar a:hover{color:var(--sky);}
-.topbar .social{display:flex; gap:14px;}
+.topbar .social{display:flex; gap:12px; align-items:center;}
+.topbar .social a{color:#B9C6DE; display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; transition:background .2s,color .2s;}
+.topbar .social a:hover{background:rgba(255,255,255,.12); color:#fff;}
 
 /* ---------- Header / Nav ---------- */
 header{position:sticky; top:0; z-index:100; background:rgba(255,255,255,.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); transition:box-shadow .3s;}
 header.scrolled{box-shadow:var(--shadow-sm);}
 .nav{display:flex; align-items:center; justify-content:space-between; min-height:110px; padding:0 10x;}
-.brand{display:flex; align-items:center; gap:12px; height:74px; width:150px; overflow:hidden; position:relative;}
-.brand img{position:absolute; top:50%; left:0; height:230px; width:auto; max-width:none; transform:translateY(-50%);}
+.brand{display:flex; align-items:center; gap:12px; height:72px;}
+.brand img{height:100%; width:auto; max-width:170px; object-fit:contain; display:block;}
 .brand .tag{font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-top:2px;}
 nav.links ul{display:flex; gap:6px; align-items:center;}
 nav.links a{font-size:15px; font-weight:600; color:var(--ink); padding:16px 13px; border-radius:6px; transition:color .2s,background .2s; white-space:nowrap;}
